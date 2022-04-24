@@ -9,7 +9,7 @@ const MainNavigation = () => {
   const history = useHistory();
 
   const logOutHandler = () => {
-    history.push('/auth');
+    history.replace('/auth');
     authContext.logOut();
   };
 
