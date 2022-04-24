@@ -50,8 +50,14 @@ const AuthForm = () => {
       throw new Error('Something went wrong during auth');
     })
     .then(data => {
-      const token = data.idToken;
-      authContext.logIn(token);
+      const {
+        idToken: token,
+        expiresIn
+      } = data.idToken;
+
+      const expirationTime = new Date().getTime() + Number(expiresIn) * 1000;
+
+      authContext.logIn(token, expirationTime);
       history.replace('/');
     })
     .catch(err => {
