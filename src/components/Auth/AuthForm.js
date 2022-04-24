@@ -49,9 +49,7 @@ const AuthForm = () => {
     })
     .then(data => {
       const token = data.idToken;
-      console.log(data);
-      authContext.logIn();
-      authContext.updateUserToken(token);
+      authContext.logIn(token);
     })
     .catch(err => {
       alert(err.message);

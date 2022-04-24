@@ -4,25 +4,28 @@ export const AuthContext = createContext({
   isLoggedIn: false,
   userToken: null,
   logIn: () => {},
-  logOut: () => {},
-  updateUserToken: () => {}
+  logOut: () => {}
 });
 
 const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userToken, setUserToken] = useState(null);
 
-  const logInHandler = () => setIsLoggedIn(true);
-  const logOutHandler = () => setIsLoggedIn(false);
-  const updateUserTokenHandler = (token) => setUserToken(token);
+  const logInHandler = (token) => {
+    setUserToken(token);
+    setIsLoggedIn(true);
+  }
+  const logOutHandler = () => {
+    setUserToken(null);
+    setIsLoggedIn(false);
+  }
 
   return (
     <AuthContext.Provider value={{
       isLoggedIn,
       userToken,
       logIn: logInHandler,
-      logOut: logOutHandler,
-      updateUserToken: updateUserTokenHandler
+      logOut: logOutHandler
     }}>
       {props.children}
     </AuthContext.Provider>
