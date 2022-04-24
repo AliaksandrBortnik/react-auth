@@ -2,12 +2,14 @@ import {useState, useRef, useContext} from 'react';
 
 import classes from './AuthForm.module.css';
 import {AuthContext} from '../../context/auth-context';
+import {useHistory} from 'react-router-dom';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const emailInputRef = useRef();
   const passwordInputRef= useRef();
   const authContext = useContext(AuthContext);
+  const history = useHistory();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,6 +52,7 @@ const AuthForm = () => {
     .then(data => {
       const token = data.idToken;
       authContext.logIn(token);
+      history.replace('/');
     })
     .catch(err => {
       alert(err.message);
