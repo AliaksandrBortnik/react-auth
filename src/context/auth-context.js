@@ -1,5 +1,7 @@
 import {createContext, useState} from 'react';
 
+let expirationTimer;
+
 export const AuthContext = createContext({
   isLoggedIn: false,
   userToken: null,
@@ -14,6 +16,7 @@ const calculateRemainingTime = (expirationTime) => {
 }
 
 const AuthContextProvider = (props) => {
+  // TODO: check if saved token is not expired before using it as initial
   const initialToken = localStorage.getItem('token');
   const [isLoggedIn, setIsLoggedIn] = useState(!!initialToken);
   const [userToken, setUserToken] = useState(initialToken);
@@ -24,14 +27,14 @@ const AuthContextProvider = (props) => {
     localStorage.setItem('token', token);
 
     const remainingTime = calculateRemainingTime(expirationTime);
-    // TODO: clean up timer if a user logouts manually before token's expiration time
-    setTimeout(logOutHandler, remainingTime);
-
+    expirationTimer = setTimeout(logOutHandler, remainingTime);
   }
   const logOutHandler = () => {
     setUserToken(null);
     setIsLoggedIn(false);
     localStorage.removeItem('token');
+
+    expirationTimer && clearTimeout(expirationTimer);
   }
 
   return (
