@@ -26,7 +26,7 @@ const AuthForm = () => {
     // TODO: add validation
     setIsLoading(true);
 
-    const API_KEY = 'AIzaSyDMMZM6ta3y-hnwFDUX0_CM9lrrxDre-8I';
+    const API_KEY = '';
     const url = isLogin ?
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`:
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
